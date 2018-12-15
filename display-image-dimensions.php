@@ -100,7 +100,7 @@ function mzoo_76580_size_columns_do_sort(&$query)
 /** Update all images
  * source of wrapper: https://isabelcastillo.com/run-once-wp
  */
-function mzoo_run_only_once_wrapper() {
+function mzoo_76580_run_only_once_wrapper() {
 
     if ( get_option( 'mzoo_display_image_dimensions_01' ) != 'completed' ) {
   		mzoo_76580_update_image_meta();
@@ -150,7 +150,7 @@ function mzoo_76580_plugin_activation() {
 
 	$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 	check_admin_referer( "activate-plugin_{$plugin}" );
-  	add_action( 'admin_init', 'mzoo_run_only_once_wrapper' );
+  	mzoo_76580_run_only_once_wrapper();
 }
 
 ?>
