@@ -103,7 +103,7 @@ function mzoo_76580_size_columns_do_sort(&$query)
 function mzoo_run_only_once_wrapper() {
 
     if ( get_option( 'mzoo_display_image_dimensions_01' ) != 'completed' ) {
-  		add_action('admin_init','mzoo_76580_update_image_meta');
+  		mzoo_76580_update_image_meta();
         update_option( 'mzoo_display_image_dimensions_01', 'completed' );
     }
     // delete_option( 'mzoo_display_image_dimensions_01' );
@@ -111,7 +111,7 @@ function mzoo_run_only_once_wrapper() {
 
 
 /*
- * Update ALL attachments metada with Width and Height
+ * Update ALL attachments metadata with _square_pixels (Width * Height) field
  *
  * Important: Run Only Once
  * 
@@ -149,7 +149,7 @@ function mzoo_76580_plugin_activation() {
 	}
 
 	$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
-	check_admin_referer( "deactivate-plugin_{$plugin}" );
+	check_admin_referer( "activate-plugin_{$plugin}" );
   	add_action( 'admin_init', 'mzoo_run_only_once_wrapper' );
 }
 
