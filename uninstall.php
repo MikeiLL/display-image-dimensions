@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin dimensions: Display Full Image Size
+Plugin Name: Display Full Image Dimensions
 Description: Display and sort by dimensions of image in Media Library listing.
 Author: Mike iLL/mZoo
 Version: 1.0.0
