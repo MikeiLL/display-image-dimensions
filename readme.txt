@@ -1,4 +1,4 @@
-=== Display Full Image Dimensions ===
+=== Display Image Dimensions in Media Library ===
 Contributors: mikeill
 Tags: image sizes, picture sizes, view image sizes, view image size links, different image sizes, thumbnails, thumbnail sizes, featured images, featured image sizes, attachment sizes
 Requires at least: 3.5
@@ -7,7 +7,7 @@ Stable tag: 1.0.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Display dimensions of full size image in media library list view, sortable by size in square pixels.
+Display dimensions of full size images in media library list view, sortable by size in square pixels.
 
 == Description ==
 

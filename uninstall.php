@@ -1,8 +1,8 @@
 <?php
 /**
- * Runs on Uninstall of Display Full Image Dimensions
+ * Runs on Uninstall of Display Image Dimensions in Media Library 
  *
- * @package   Display Full Image Dimensions
+ * @package   Display Image Dimensions in Media Library 
  * @author    Mike iLL/mZoo
  * @license   GPL-2.0+
  * @link      http://mzoo.org
