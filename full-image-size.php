@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin dimensions: Display Full Image Size
-Description: Displays dimensions of image in Media Library listing.
-Author: mZoo
+Description: Display and sort by dimensions of image in Media Library listing.
+Author: Mike iLL/mZoo
 Version: 1.0.0
 Author URI: http://mzoo.org
-Text Domain: display-full-image-size
+Text Domain: display-full-image-dimensions
 */
 // Add the column
 function mzoo_filedimensions_column( $cols ) {
@@ -40,25 +40,12 @@ add_action( 'admin_init', 'hook_new_media_columns' );
 source: http://justintadlock.com/archives/2011/01/28/linking-to-all-image-sizes-in-wordpress 
 borrowed from display-all-image-sizes plugin */
 function mzoo_return_dimensions( $id ) {
-    //global $wpdb;
-    //$attachments = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE post_mime_type LIKE '%image%'" );
-    //foreach( $attachments as $att )
-    //{
-    //	echo "<pre>";
-    //	print_r(get_post_meta( $att->ID));
-    //	echo "</pre>";
-    //}
 
 	$image = wp_get_attachment_image_src( $id, 'full' );
 
 		/* Return dimensions, link, width, height */
 		if ( !empty( $image ) ) {
-		echo "<pre>";
-			$attachment_meta = wp_get_attachment_metadata( $id );
-			print_r($attachment_meta);
-		echo "</pre>";
-			// return $image[1];
-			return $image[1] . 'px x ' . $image[2] . 'px';
+			return $image[1] . 'px x ' . $image[2] . 'px (' . get_post_meta( $id, '_square_pixels', true) . 'px square)';
 		} else {
 			return 'Error returning image data';
 		}
@@ -78,8 +65,8 @@ function mzoo_76580_update_image_meta_data( $image_data, $att_id )
     $width  = $image_data['width'];
     $height  = $image_data['height'];
 
-    update_post_meta( $att_id, '_width', $width );
-    update_post_meta( $att_id, '_height', $height );
+    // update_post_meta( $att_id, '_width', $width );
+    // update_post_meta( $att_id, '_height', $height );
     update_post_meta( $att_id, '_square_pixels', $width * $height);
 
     return $image_data;
@@ -104,8 +91,8 @@ function mzoo_76580_size_columns_do_sort(&$query)
 
     if ( 'dimensions' == $_GET['orderby'] ) 
     {
-        // $query->set('meta_key', '_width');
-        // $query->set('orderby', 'meta_value_num');
+        $query->set('meta_key', '_square_pixels');
+        $query->set('orderby', 'meta_value_num');
     }
 
 }
@@ -115,13 +102,13 @@ function mzoo_76580_size_columns_do_sort(&$query)
  */
 function mzoo_run_only_once_wrapper() {
 
-    if ( get_option( 'mzoo_run_only_once_01' ) != 'completed' ) {
+    if ( get_option( 'mzoo_display_image_dimensions_01' ) != 'completed' ) {
   		add_action('admin_init','mzoo_76580_update_image_meta');
-        update_option( 'mzoo_run_only_once_01', 'completed' );
+        update_option( 'mzoo_display_image_dimensions_01', 'completed' );
     }
-    // delete_option( 'mzoo_run_only_once_01' );
+    // delete_option( 'mzoo_display_image_dimensions_01' );
 }
-add_action( 'admin_init', 'mzoo_run_only_once_wrapper' );
+
 
 /*
  * Update ALL attachments metada with Width and Height
@@ -131,28 +118,39 @@ add_action( 'admin_init', 'mzoo_run_only_once_wrapper' );
  */
 function mzoo_76580_update_image_meta()
 {   
-die("i ran");
+
     global $wpdb;
     $attachments = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE post_mime_type LIKE '%image%'" );
     foreach( $attachments as $att )
     {
         list( $url, $width, $height ) = wp_get_attachment_image_src( $att->ID, 'full' );
-        //update_post_meta( $att->ID, '_width', $width );
-        //update_post_meta( $att->ID, '_height', $height );
         update_post_meta( $att->ID, '_square_pixels', $height * $width);
     }
 }
 
-add_filter('attachment_fields_to_edit', 'mzoo_76580_edit_media_custom_field', 11, 2 );
+
+// Create Custom field and save value.
 add_filter('attachment_fields_to_save', 'mzoo_76580_save_media_custom_field', 11, 2 );
 
-function mzoo_76580_edit_media_custom_field( $form_fields, $post ) {
-    $form_fields['square_pixels'] = array( 'label' => 'Image Square Pixel Value', 'input' => 'text', 'value' => get_post_meta( $post->ID, '_square_pixels', true ) );
-    return $form_fields;
-}
-
 function mzoo_76580_save_media_custom_field( $post, $attachment ) {
-    update_post_meta( $post['ID'], '_square_pixels', $attachment['square_pixels'] );
+	$image = wp_get_attachment_image_src( $id, 'full' );
+	$width  = $image_data['width'];
+    $height  = $image_data['height'];
+    update_post_meta( $post['ID'], '_square_pixels', $height * $width );
     return $post;
 }
+
+// Activation hook
+// source: https://premium.wpmudev.org/blog/activate-deactivate-uninstall-hooks/
+register_activation_hook( __FILE__, 'mzoo_76580_plugin_activation' );
+function mzoo_76580_plugin_activation() {
+	if ( ! current_user_can( 'activate_plugins' ) ) {
+		return;
+	}
+
+	$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
+	check_admin_referer( "deactivate-plugin_{$plugin}" );
+  	add_action( 'admin_init', 'mzoo_run_only_once_wrapper' );
+}
+
 ?>
