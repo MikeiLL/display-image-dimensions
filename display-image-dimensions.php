@@ -8,18 +8,18 @@ Author URI: http://mzoo.org
 Text Domain: display-full-image-dimensions
 */
 // Add the column
-function mzoo_didml_filedimensions_column( $cols ) {
+function mzoo_didml_file_dimensions_column( $cols ) {
         $cols["image_dimensions"] = "Dimensions (width x height)";
         return $cols;
 }
 
 // Display Column Contents
-function mzoo_didml_filedimensions_contents( $column_dimensions, $id ) {
+function mzoo_didml_file_dimensions_contents( $column_dimensions, $id ) {
            echo mzoo_didml_return_dimensions($id) ;
 }
 
 // Register the column as sortable & sort by dimensions
-function mzoo_didml_filedimensions_column_sortable( $cols ) {
+function mzoo_didml_file_dimensions_column_sortable( $cols ) {
     $cols["image_dimensions"] = "dimensions";
 
     return $cols;
@@ -28,9 +28,9 @@ function mzoo_didml_filedimensions_column_sortable( $cols ) {
 
 // Hook actions to admin_init
 function mzoo_didml_hook_new_media_columns() {
-    add_filter( 'manage_media_columns', 'mzoo_didml_filedimensions_column' );
-    add_action( 'manage_media_custom_column', 'mzoo_didml_filedimensions_contents', 10, 2 );
-    add_filter( 'manage_upload_sortable_columns', 'mzoo_didml_filedimensions_column_sortable' );    
+    add_filter( 'manage_media_columns', 'mzoo_didml_file_dimensions_column' );
+    add_action( 'manage_media_custom_column', 'mzoo_didml_file_dimensions_contents', 10, 2 );
+    add_filter( 'manage_upload_sortable_columns', 'mzoo_didml_file_dimensions_column_sortable' );    
     add_filter( 'wp_generate_attachment_metadata', 'mzoo_didml_76580_update_image_meta_data', 10, 2);
     add_action( 'pre_get_posts', 'mzoo_didml_76580_size_columns_do_sort' );
 }
@@ -89,7 +89,7 @@ function mzoo_didml_76580_size_columns_do_sort(&$query)
     if( !$is_width )
         return;
 
-    if ( 'dimensions' == $_GET['orderby'] ) 
+    if ( 'dimensions' == sanitize_key($_GET['orderby']) ) 
     {
         $query->set('meta_key', '_square_pixels');
         $query->set('orderby', 'meta_value_num');
@@ -148,7 +148,7 @@ function mzoo_didml_76580_plugin_activation() {
 		return;
 	}
 
-	$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
+	$plugin = isset( $_REQUEST['plugin'] ) ? sanitize_key($_REQUEST['plugin']) : '';
 	check_admin_referer( "activate-plugin_{$plugin}" );
   	mzoo_didml_76580_run_only_once_wrapper();
 }
