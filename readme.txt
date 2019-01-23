@@ -7,7 +7,7 @@ Stable tag: 1.0.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Display dimensions of full size images in media library list view, sortable by size in square pixels.
+Display dimensions of full size images in media library list view, sortable by square pixel size.
 
 == Description ==
 
@@ -15,7 +15,7 @@ Display dimensions of full size images in media library list view, sortable by s
 
 = How to Use =
 
-Install and activate the plugin, and the Media Library will include a sortable "Dimensions" column.
+Install and activate the plugin, and the Media Library LIST VIEW will include a sortable "Dimensions" column.
 
 == Installation ==
 
@@ -29,7 +29,8 @@ Reach out. Happy to help.
 
 == Screenshots ==
 
-
+screenshot1.png
+screenshot2.png
 
 == CHANGELOG ==
 
