@@ -8,18 +8,18 @@ Author URI: http://mzoo.org
 Text Domain: display-full-image-dimensions
 */
 // Add the column
-function mzoo_filedimensions_column( $cols ) {
+function mzoo_didml_filedimensions_column( $cols ) {
         $cols["image_dimensions"] = "Dimensions (width x height)";
         return $cols;
 }
 
 // Display Column Contents
-function mzoo_filedimensions_contents( $column_dimensions, $id ) {
-           echo mzoo_return_dimensions($id) ;
+function mzoo_didml_filedimensions_contents( $column_dimensions, $id ) {
+           echo mzoo_didml_return_dimensions($id) ;
 }
 
 // Register the column as sortable & sort by dimensions
-function mzoo_filedimensions_column_sortable( $cols ) {
+function mzoo_didml_filedimensions_column_sortable( $cols ) {
     $cols["image_dimensions"] = "dimensions";
 
     return $cols;
@@ -27,19 +27,19 @@ function mzoo_filedimensions_column_sortable( $cols ) {
 
 
 // Hook actions to admin_init
-function hook_new_media_columns() {
-    add_filter( 'manage_media_columns', 'mzoo_filedimensions_column' );
-    add_action( 'manage_media_custom_column', 'mzoo_filedimensions_contents', 10, 2 );
-    add_filter( 'manage_upload_sortable_columns', 'mzoo_filedimensions_column_sortable' );    
-    add_filter( 'wp_generate_attachment_metadata', 'mzoo_76580_update_image_meta_data', 10, 2);
-    add_action( 'pre_get_posts', 'mzoo_76580_size_columns_do_sort' );
+function mzoo_didml_hook_new_media_columns() {
+    add_filter( 'manage_media_columns', 'mzoo_didml_filedimensions_column' );
+    add_action( 'manage_media_custom_column', 'mzoo_didml_filedimensions_contents', 10, 2 );
+    add_filter( 'manage_upload_sortable_columns', 'mzoo_didml_filedimensions_column_sortable' );    
+    add_filter( 'wp_generate_attachment_metadata', 'mzoo_didml_76580_update_image_meta_data', 10, 2);
+    add_action( 'pre_get_posts', 'mzoo_didml_76580_size_columns_do_sort' );
 }
-add_action( 'admin_init', 'hook_new_media_columns' );
+add_action( 'admin_init', 'mzoo_didml_hook_new_media_columns' );
 
 /* Return array of size data
 source: http://justintadlock.com/archives/2011/01/28/linking-to-all-image-sizes-in-wordpress 
 borrowed from display-all-image-sizes plugin */
-function mzoo_return_dimensions( $id ) {
+function mzoo_didml_return_dimensions( $id ) {
 
 	$image = wp_get_attachment_image_src( $id, 'full' );
 
@@ -60,7 +60,7 @@ function mzoo_return_dimensions( $id ) {
  *
  */
 
-function mzoo_76580_update_image_meta_data( $image_data, $att_id ) 
+function mzoo_didml_76580_update_image_meta_data( $image_data, $att_id ) 
 {
     $width  = $image_data['width'];
     $height  = $image_data['height'];
@@ -78,7 +78,7 @@ function mzoo_76580_update_image_meta_data( $image_data, $att_id )
  *
  */
 
-function mzoo_76580_size_columns_do_sort(&$query)
+function mzoo_didml_76580_size_columns_do_sort(&$query)
 {
     global $current_screen;
     if( 'upload' != $current_screen->id )
@@ -100,13 +100,13 @@ function mzoo_76580_size_columns_do_sort(&$query)
 /** Update all images
  * source of wrapper: https://isabelcastillo.com/run-once-wp
  */
-function mzoo_76580_run_only_once_wrapper() {
+function mzoo_didml_76580_run_only_once_wrapper() {
 
-    if ( get_option( 'mzoo_display_image_dimensions_01' ) != 'completed' ) {
-  		mzoo_76580_update_image_meta();
-        update_option( 'mzoo_display_image_dimensions_01', 'completed' );
+    if ( get_option( 'mzoo_didml_display_image_dimensions_01' ) != 'completed' ) {
+  		mzoo_didml_76580_update_image_meta();
+        update_option( 'mzoo_didml_display_image_dimensions_01', 'completed' );
     }
-    // delete_option( 'mzoo_display_image_dimensions_01' );
+    // delete_option( 'mzoo_didml_display_image_dimensions_01' );
 }
 
 
@@ -116,7 +116,7 @@ function mzoo_76580_run_only_once_wrapper() {
  * Important: Run Only Once
  * 
  */
-function mzoo_76580_update_image_meta()
+function mzoo_didml_76580_update_image_meta()
 {   
 
     global $wpdb;
@@ -130,9 +130,9 @@ function mzoo_76580_update_image_meta()
 
 
 // Create Custom field and save value.
-add_filter('attachment_fields_to_save', 'mzoo_76580_save_media_custom_field', 11, 2 );
+add_filter('attachment_fields_to_save', 'mzoo_didml_76580_save_media_custom_field', 11, 2 );
 
-function mzoo_76580_save_media_custom_field( $post, $attachment ) {
+function mzoo_didml_76580_save_media_custom_field( $post, $attachment ) {
 	$image = wp_get_attachment_image_src( $id, 'full' );
 	$width  = $image_data['width'];
     $height  = $image_data['height'];
@@ -142,15 +142,15 @@ function mzoo_76580_save_media_custom_field( $post, $attachment ) {
 
 // Activation hook
 // source: https://premium.wpmudev.org/blog/activate-deactivate-uninstall-hooks/
-register_activation_hook( __FILE__, 'mzoo_76580_plugin_activation' );
-function mzoo_76580_plugin_activation() {
+register_activation_hook( __FILE__, 'mzoo_didml_76580_plugin_activation' );
+function mzoo_didml_76580_plugin_activation() {
 	if ( ! current_user_can( 'activate_plugins' ) ) {
 		return;
 	}
 
 	$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 	check_admin_referer( "activate-plugin_{$plugin}" );
-  	mzoo_76580_run_only_once_wrapper();
+  	mzoo_didml_76580_run_only_once_wrapper();
 }
 
 ?>
