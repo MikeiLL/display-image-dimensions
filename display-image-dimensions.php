@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Display Image Dimensions in Media Library 
-Description: Display and sort by dimensions of image in Media Library listing.
-Author: Mike iLL/mZoo
-Version: 1.0.1
-Author URI: http://mzoo.org
-Text Domain: display-full-image-dimensions
+ * Plugin Name: Display Image Dimensions in Media Library 
+ * Description: Display and sort by dimensions of image in Media Library listing.
+ * Author: Mike iLL/mZoo
+ * Version: 1.0.1
+ * Author URI: http://mzoo.org
+ * Text Domain: display-full-image-dimensions
 */
 // Add the column
 function mzoo_didml_file_dimensions_column( $cols ) {
