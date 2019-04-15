@@ -2,8 +2,8 @@
 Contributors: mikeill
 Tags: image sizes, picture sizes, view image sizes, view image size links, different image sizes, thumbnails, thumbnail sizes, featured images, featured image sizes, attachment sizes
 Requires at least: 3.5
-Tested up to: 5.0.1
-Stable tag: 1.0.0
+Tested up to: 5.1.1
+Stable tag: 1.0.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -36,3 +36,6 @@ screenshot2.png
 
 = 1.0.0 (14.12.2018) =
 * Initial commit
+
+= 1.0.1 (14.4.2019) =
+* Cleanup code a little.

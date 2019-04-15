@@ -3,7 +3,7 @@
 Plugin Name: Display Image Dimensions in Media Library 
 Description: Display and sort by dimensions of image in Media Library listing.
 Author: Mike iLL/mZoo
-Version: 1.0.0
+Version: 1.0.1
 Author URI: http://mzoo.org
 Text Domain: display-full-image-dimensions
 */
@@ -148,7 +148,7 @@ function mzoo_didml_76580_plugin_activation() {
 		return;
 	}
 
-	$plugin = isset( $_REQUEST['plugin'] ) ? sanitize_key($_REQUEST['plugin']) : '';
+	$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 	check_admin_referer( "activate-plugin_{$plugin}" );
   	mzoo_didml_76580_run_only_once_wrapper();
 }
