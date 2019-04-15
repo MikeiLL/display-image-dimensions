@@ -4,7 +4,7 @@ Tags: image sizes, picture sizes, view image sizes, view image size links, diffe
 Requires at least: 3.5
 Version: 1.0.1
 Tested up to: 5.1.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -30,8 +30,8 @@ Reach out. Happy to help.
 
 == Screenshots ==
 
-screenshot1.png
-screenshot2.png
+1. Heading
+2. Location
 
 == CHANGELOG ==
 
@@ -40,3 +40,6 @@ screenshot2.png
 
 = 1.0.1 (14.4.2019) =
 * Cleanup code a little.
+
+= 1.0.2 (14.4.2019) =
+* Add two screen shots to readme, hopefully.
