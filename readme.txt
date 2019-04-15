@@ -2,6 +2,7 @@
 Contributors: mikeill
 Tags: image sizes, picture sizes, view image sizes, view image size links, different image sizes, thumbnails, thumbnail sizes, featured images, featured image sizes, attachment sizes
 Requires at least: 3.5
+Version: 1.0.1
 Tested up to: 5.1.1
 Stable tag: 1.0.1
 License: MIT
