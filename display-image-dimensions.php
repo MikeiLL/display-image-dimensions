@@ -81,12 +81,12 @@ function mzoo_didml_76580_update_image_meta_data( $image_data, $att_id )
 function mzoo_didml_76580_size_columns_do_sort(&$query)
 {
     global $current_screen;
-    if( 'upload' != $current_screen->id )
+    if ( !is_object($current_screen) || 'upload' != $current_screen->id )
         return;
 
     $is_width = (isset( $_GET['orderby'] ) && 'dimensions' == $_GET['orderby']);
 
-    if( !$is_width )
+    if ( !$is_width )
         return;
 
     if ( 'dimensions' == sanitize_key($_GET['orderby']) ) 
