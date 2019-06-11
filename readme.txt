@@ -3,8 +3,8 @@ Contributors: mikeill
 Tags: image sizes, picture sizes, view image sizes, view image size links, different image sizes, thumbnails, thumbnail sizes, featured images, featured image sizes, attachment sizes
 Requires at least: 3.5
 Version: 1.0.1
-Tested up to: 5.1.1
-Stable tag: 1.0.2
+Tested up to: 5.2.1
+Stable tag: 1.0.3
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -43,3 +43,6 @@ Reach out. Happy to help.
 
 = 1.0.2 (14.4.2019) =
 * Add two screen shots to readme, hopefully.
+
+= 1.0.3 (11.6.2019) =
+* Return sort columns if screen is not an object.
