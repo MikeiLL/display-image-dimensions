@@ -1,9 +1,9 @@
 <?php
 /*
- * Plugin Name: Display Image Dimensions in Media Library 
+ * Plugin Name: Display Image Dimensions in Media Library
  * Description: Display and sort by dimensions of image in Media Library listing.
  * Author: Mike iLL/mZoo
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author URI: http://mzoo.org
  * Text Domain: display-full-image-dimensions
 */
@@ -30,14 +30,14 @@ function mzoo_didml_file_dimensions_column_sortable( $cols ) {
 function mzoo_didml_hook_new_media_columns() {
     add_filter( 'manage_media_columns', 'mzoo_didml_file_dimensions_column' );
     add_action( 'manage_media_custom_column', 'mzoo_didml_file_dimensions_contents', 10, 2 );
-    add_filter( 'manage_upload_sortable_columns', 'mzoo_didml_file_dimensions_column_sortable' );    
+    add_filter( 'manage_upload_sortable_columns', 'mzoo_didml_file_dimensions_column_sortable' );
     add_filter( 'wp_generate_attachment_metadata', 'mzoo_didml_76580_update_image_meta_data', 10, 2);
     add_action( 'pre_get_posts', 'mzoo_didml_76580_size_columns_do_sort' );
 }
 add_action( 'admin_init', 'mzoo_didml_hook_new_media_columns' );
 
 /* Return array of size data
-source: http://justintadlock.com/archives/2011/01/28/linking-to-all-image-sizes-in-wordpress 
+source: http://justintadlock.com/archives/2011/01/28/linking-to-all-image-sizes-in-wordpress
 borrowed from display-all-image-sizes plugin */
 function mzoo_didml_return_dimensions( $id ) {
 
@@ -60,7 +60,7 @@ function mzoo_didml_return_dimensions( $id ) {
  *
  */
 
-function mzoo_didml_76580_update_image_meta_data( $image_data, $att_id ) 
+function mzoo_didml_76580_update_image_meta_data( $image_data, $att_id )
 {
     $width  = $image_data['width'];
     $height  = $image_data['height'];
@@ -89,7 +89,7 @@ function mzoo_didml_76580_size_columns_do_sort(&$query)
     if ( !$is_width )
         return;
 
-    if ( 'dimensions' == sanitize_key($_GET['orderby']) ) 
+    if ( 'dimensions' == sanitize_key($_GET['orderby']) )
     {
         $query->set('meta_key', '_square_pixels');
         $query->set('orderby', 'meta_value_num');
@@ -114,10 +114,10 @@ function mzoo_didml_76580_run_only_once_wrapper() {
  * Update ALL attachments metadata with _square_pixels (Width * Height) field
  *
  * Important: Run Only Once
- * 
+ *
  */
 function mzoo_didml_76580_update_image_meta()
-{   
+{
 
     global $wpdb;
     $attachments = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE post_mime_type LIKE '%image%'" );
